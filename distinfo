@@ -1,0 +1,5 @@
+TIMESTAMP = 1586098831
+SHA256 (zstd-jni-1.4.4-9-repo.tar.gz) = 7c55f228d7759c2288e96e3de71a5aa703208398aeb172224e650c302c27fae7
+SIZE (zstd-jni-1.4.4-9-repo.tar.gz) = 75406623
+SHA256 (luben-zstd-jni-1.4.4-9-v1.4.4-9_GH0.tar.gz) = 51393a8bfdc09bf1fbf0d136407cecd2e43b1639eb6da2cc349dc63ed3e254a3
+SIZE (luben-zstd-jni-1.4.4-9-v1.4.4-9_GH0.tar.gz) = 9220635

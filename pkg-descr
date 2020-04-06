@@ -1,0 +1,10 @@
+Zstd-jni provides Java Native Interface bindings for the Zstd native library.
+Zstandard, or zstd for short, is a fast, lossless compression algorithm,
+targeting real-time compression scenarios at zlib-level and better compression
+ratios.
+
+This port does not depend on archivers/zstd, instead it builds and embeds its
+own copy of the native library. The embedded native library version is the
+value of this port's DISTVERSION to the left of the hyphen.
+
+WWW: https://github.com/luben/zstd-jni
