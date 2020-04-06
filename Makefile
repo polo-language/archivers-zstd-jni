@@ -23,6 +23,7 @@ GH_PROJECT=	${PORTNAME}-${PKGNAMESUFFIX}
 GH_TAGNAME=	v${DISTVERSION}
 
 USE_GCC=	yes
+USE_JAVA=	yes
 
 REINPLACE_ARGS=	-i ''
 
@@ -35,6 +36,6 @@ do-build:
 	@cd ${WRKSRC} && sbt -Dsbt.ivy.home=${WRKDIR}/.ivy2 compile package
 
 do-install:
-	${INSTALL_DATA} ${WRKSRC}/target/${PORTNAME}-${PORTVERSION}.jar ${STAGEDIR}${JAVAJARDIR}/${PORTNAME}.jar
+	${INSTALL_DATA} ${WRKSRC}/target/${PORTNAME}-${PKGNAMESUFFIX}-${DISTVERSION}.jar ${STAGEDIR}${JAVAJARDIR}/${PORTNAME}-${PKGNAMESUFFIX}.jar
 
 .include <bsd.port.mk>
