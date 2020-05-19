@@ -13,8 +13,6 @@ COMMENT=	JNI bindings for the Zstd lossless compression library
 LICENSE=	BSD2CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-ONLY_FOR_ARCHS=	amd64
-
 BUILD_DEPENDS=	cmake:devel/cmake \
 		sbt:devel/sbt
 
