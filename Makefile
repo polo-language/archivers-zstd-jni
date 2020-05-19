@@ -15,19 +15,22 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 ONLY_FOR_ARCHS=	amd64
 
-BUILD_DEPENDS=	sbt:devel/sbt
+BUILD_DEPENDS=	cmake:devel/cmake \
+		sbt:devel/sbt
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	luben
 GH_PROJECT=	${PORTNAME}-${PKGNAMESUFFIX}
 GH_TAGNAME=	v${DISTVERSION}
 
-USE_GCC=	yes
 USE_JAVA=	yes
 
 REINPLACE_ARGS=	-i ''
 
 TEST_TARGET=	test
+
+post-extract:
+	@${RM} ${WRKSRC}/sbt
 
 post-patch:
 	@${REINPLACE_CMD} -e 's|jniNativeCompiler := "gcc"|jniNativeCompiler := "${CC}"|' ${WRKSRC}/build.sbt
@@ -37,5 +40,8 @@ do-build:
 
 do-install:
 	${INSTALL_DATA} ${WRKSRC}/target/${PORTNAME}-${PKGNAMESUFFIX}-${DISTVERSION}.jar ${STAGEDIR}${JAVAJARDIR}/${PORTNAME}-${PKGNAMESUFFIX}.jar
+
+do-test:
+	@cd ${WRKSRC} && sbt -Dsbt.ivy.home=${WRKDIR}/.ivy2 test
 
 .include <bsd.port.mk>
