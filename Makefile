@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	zstd
-DISTVERSION=	1.4.4-9
+DISTVERSION=	1.4.4-11
 CATEGORIES=	archivers java
 PKGNAMESUFFIX=	jni
 DISTNAME=	${PORTNAME}-${PKGNAMESUFFIX}-${DISTVERSION}
@@ -23,8 +23,6 @@ GH_ACCOUNT=	luben
 GH_PROJECT=	${PORTNAME}-${PKGNAMESUFFIX}
 GH_TAGNAME=	v${DISTVERSION}
 
-USE_JAVA=	yes
-
 REINPLACE_ARGS=	-i ''
 
 TEST_TARGET=	test
@@ -36,12 +34,12 @@ post-patch:
 	@${REINPLACE_CMD} -e 's|jniNativeCompiler := "gcc"|jniNativeCompiler := "${CC}"|' ${WRKSRC}/build.sbt
 
 do-build:
-	@cd ${WRKSRC} && sbt -Dsbt.ivy.home=${WRKDIR}/.ivy2 compile package
+	@cd ${WRKSRC} && sbt -Dsbt.ivy.home=${WRKDIR}/.ivy2 -Dsbt.boot.directory=${WRKDIR}/sbt-boot -Dsbt.global.base=${WRKDIR}/sbt-global -Dsbt.offline=true -Dsbt.coursier=false compile package
 
 do-install:
 	${INSTALL_DATA} ${WRKSRC}/target/${PORTNAME}-${PKGNAMESUFFIX}-${DISTVERSION}.jar ${STAGEDIR}${JAVAJARDIR}/${PORTNAME}-${PKGNAMESUFFIX}.jar
 
 do-test:
-	@cd ${WRKSRC} && sbt -Dsbt.ivy.home=${WRKDIR}/.ivy2 test
+	@cd ${WRKSRC} && sbt -Dsbt.ivy.home=${WRKDIR}/.ivy2 -Dsbt.boot.directory=${WRKDIR}/sbt-boot -Dsbt.global.base=${WRKDIR}/sbt-global -Dsbt.offline=true -Dsbt.coursier=false test
 
 .include <bsd.port.mk>
