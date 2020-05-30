@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	zstd
-DISTVERSION=	1.4.4-11
+DISTVERSION=	1.4.5-1
 CATEGORIES=	archivers java
 PKGNAMESUFFIX=	jni
 DISTNAME=	${PORTNAME}-${PKGNAMESUFFIX}-${DISTVERSION}
@@ -21,8 +21,7 @@ GH_ACCOUNT=	luben
 GH_PROJECT=	${PORTNAME}-${PKGNAMESUFFIX}
 GH_TAGNAME=	v${DISTVERSION}
 
-PLIST_FILES=	${JAVAJARDIR}/${PORTNAME}-${PKGNAMESUFFIX}.jar
-REINPLACE_ARGS=	-i ''
+PLIST_FILES=	${PREFIX}/share/java/classes/${PORTNAME}-${PKGNAMESUFFIX}.jar # Not going to pull in USE_JAVA just to get ${JAVAJARDIR}...
 
 TEST_TARGET=	test
 
@@ -33,10 +32,10 @@ post-patch:
 	@${REINPLACE_CMD} -e 's|jniNativeCompiler := "gcc"|jniNativeCompiler := "${CC}"|' ${WRKSRC}/build.sbt
 
 do-build:
-	@cd ${WRKSRC} && sbt -Dsbt.ivy.home=${WRKDIR}/.ivy2 -Dsbt.boot.directory=${WRKDIR}/sbt-boot -Dsbt.global.base=${WRKDIR}/sbt-global -Dsbt.offline=true -Dsbt.coursier=false compile package
+	cd ${WRKSRC} && sbt -Dsbt.ivy.home=${WRKDIR}/.ivy2 -Dsbt.boot.directory=${WRKDIR}/sbt-boot -Dsbt.global.base=${WRKDIR}/sbt-global -Dsbt.offline=true -Dsbt.coursier=false compile package
 
 do-install:
-	${INSTALL_DATA} ${WRKSRC}/target/${PORTNAME}-${PKGNAMESUFFIX}-${DISTVERSION}.jar ${STAGEDIR}${JAVAJARDIR}/${PORTNAME}-${PKGNAMESUFFIX}.jar
+	${INSTALL_DATA} ${WRKSRC}/target/${PORTNAME}-${PKGNAMESUFFIX}-${DISTVERSION}.jar ${STAGEDIR}${PREFIX}/share/java/classes/${PORTNAME}-${PKGNAMESUFFIX}.jar
 
 do-test:
 	@cd ${WRKSRC} && sbt -Dsbt.ivy.home=${WRKDIR}/.ivy2 -Dsbt.boot.directory=${WRKDIR}/sbt-boot -Dsbt.global.base=${WRKDIR}/sbt-global -Dsbt.offline=true -Dsbt.coursier=false test
